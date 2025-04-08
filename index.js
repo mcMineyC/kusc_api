@@ -160,8 +160,6 @@ function selectFromList(items, title = "Select an option") {
   });
 }
 
-// getStreamUrl("KUSC", "AC96").then((url) => console.log("Got url:", url));
-// getCurrentMetadata("KUSC", false).then((metadata) => console.log(metadata));
 async function selectStream() {
   const streams = await getStreams();
   // Create array of stream names for selection
@@ -189,9 +187,6 @@ selectStream().then(async (selected) => {
     );
   }
 });
-// selectFromList(
-//   streams.map((stream) => ({ display: stream.name, value: stream.id })),
-// ).then(async (value) => {});
 
 export default {
   getStreams,
