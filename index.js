@@ -37,6 +37,111 @@ const streams = [
     id: "CC9_S01",
   },
 ];
+const streamsQuery = {
+  operationName: "StreamsList",
+  variables: {
+    isKusc: true,
+    isKdfc: false,
+    isCC: false,
+    where: {
+      KUSC: true,
+    },
+  },
+  query: `fragment StreamConfigFragment on StreamConfig {
+  name
+  donationUrl
+  streamOrder
+  seo {
+    title
+    description
+    keywords
+    image {
+      url
+      __typename
+    }
+    __typename
+  }
+  sponsorCollection(limit: 100) {
+    items {
+      sys {
+        id
+        __typename
+      }
+      title
+      url
+      name
+      logo {
+        url
+        title
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+  __typename
+}
+
+query StreamsList($where: StreamFilter!, $isKusc: Boolean!, $isKdfc: Boolean!, $isCC: Boolean!) {
+  streamCollection(limit: 20, where: $where) {
+    items {
+      sys {
+        id
+        __typename
+      }
+      name
+      description
+      playerName
+      onAir
+      streamTrackingId
+      thumbnail {
+        url
+        description
+        __typename
+      }
+      kuscConfig @include(if: $isKusc) {
+        ...StreamConfigFragment
+        __typename
+      }
+      kdfcConfig @include(if: $isKdfc) {
+        ...StreamConfigFragment
+        __typename
+      }
+      ccConfig @include(if: $isCC) {
+        ...StreamConfigFragment
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}`,
+};
+async function getStreams() {
+  try {
+    const response = await axios.post(
+      "https://www.kusc.org/api/graphql-proxy",
+      streamsQuery,
+    );
+    const streams = response.data.data.streamCollection.items.map((stream) => ({
+      id: stream.sys.id,
+      name: stream.name,
+      description: stream.description,
+      playerName: stream.playerName,
+      onAir: stream.onAir,
+      streamTrackingId: stream.streamTrackingId,
+      thumbnailUrl: stream.thumbnail?.url,
+      donationUrl: stream.kuscConfig?.donationUrl,
+      streamOrder: stream.kuscConfig?.streamOrder,
+    }));
+
+    // Sort by streamOrder if needed
+    return streams.sort((a, b) => a.streamOrder - b.streamOrder);
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
+  }
+}
 
 async function getStreamInfo(callSign) {
   var url = streamInfoUrl.replace("<callsign>", callSign);
@@ -168,12 +273,36 @@ function selectFromList(items, title = "Select an option") {
 
 // getStreamUrl("KUSC", "AC96").then((url) => console.log("Got url:", url));
 // getCurrentMetadata("KUSC", false).then((metadata) => console.log(metadata));
-selectFromList(
-  streams.map((stream) => ({ display: stream.name, value: stream.id })),
-).then(async (value) => {
-  console.log("Got url:", await getStreamUrl(value.value));
-  console.log("Got metadata:", (await getCurrentMetadata(value.value)).summary);
+async function selectStream() {
+  const streams = await getStreams();
+  // Create array of stream names for selection
+  var streamSelections = streams.map((stream) => ({
+    display: stream.name,
+    value: stream,
+  }));
+  // Use your select-from-list function
+  const selection = await selectFromList(streamSelections, "Select a Stream");
+
+  // Find the full stream data for the selected name
+  return selection;
+}
+
+// Usage:
+selectStream().then(async (selected) => {
+  if (selected) {
+    selected = selected.value;
+    console.log("Selected stream:", selected.name);
+    // Use the selected.playerName to get the stream URL
+    console.log("Got url:", await getStreamUrl(selected.playerName));
+    console.log(
+      "Got metadata:",
+      (await getCurrentMetadata(selected.playerName)).summary,
+    );
+  }
 });
+// selectFromList(
+//   streams.map((stream) => ({ display: stream.name, value: stream.id })),
+// ).then(async (value) => {});
 
 export default {
   getStreamInfo,
