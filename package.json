@@ -1,0 +1,15 @@
+{
+  "name": "kusc_reverse_engineering",
+  "version": "1.0.0",
+  "description": "This is a repo for reverse engineering KUSC's audio stream for *educational purposes* :wink:",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.8.4",
+    "fast-xml-parser": "^5.2.0"
+  }
+}
