@@ -2,6 +2,8 @@
 
 A Node.js wrapper for the KUSC radio streaming API.
 
+[NPM](https://www.npmjs.com/package/kusc_api)
+
 ## Installation
 
 ```bash
