@@ -28,7 +28,8 @@ async function getStreamInfo(callSign) {
     console.log(JSON.stringify(mp, null, 2));
     var tmp = {
       mount: mp.mount,
-      format: mp.format,
+      codec: mp["media-format"].audio.codec,
+      // container: mp.format,
       bitrate: mp.bitrate,
       url:
         server.ports.port.type +
@@ -53,8 +54,8 @@ async function getStreamUrl(streamId) {
   var preferredStream = "AAC96";
   var stream = {};
   if (streamInfo.filter((mp) => mp.mount.includes(preferredStream)).length > 0)
-    stream = streamInfo.find((mp) => mp.mount.includes(preferredStream)).url;
-  return stream.url + stream.mount + "/" + stream.fileType;
+    stream = streamInfo.find((mp) => mp.mount.includes(preferredStream));
+  return stream.url + stream.mount + "/" + stream.codec;
   // return streamInfo.then((info) => {
   //   var url = info.streams.stream.find((stream) => stream.id === streamId).url;
   //   return url;
