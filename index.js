@@ -9,8 +9,32 @@ const streams = [
     id: "KUSC",
   },
   {
+    name: "Classical California Ultimate Playlist",
+    id: "CC1_S01",
+  },
+  {
+    name: "A Classical California Christmas",
+    id: "CC2_S01",
+  },
+  {
+    name: "Classical California Movie Music Playlist",
+    id: "CC3_S01",
+  },
+  {
     name: "Great Escape",
     id: "CC4_S01",
+  },
+  {
+    name: "Classical Americano",
+    id: "CC5_S01",
+  },
+  {
+    name: "Arcade",
+    id: "CC8_S01",
+  },
+  {
+    name: "Glissando",
+    id: "CC9_S01",
   },
 ];
 
@@ -148,8 +172,7 @@ selectFromList(
   streams.map((stream) => ({ display: stream.name, value: stream.id })),
 ).then(async (value) => {
   console.log("Got url:", await getStreamUrl(value.value));
-  console.log("Currently playing:");
-  console.log((await getCurrentMetadata(value.value)).summary);
+  console.log("Got metadata:", (await getCurrentMetadata(value.value)).summary);
 });
 
 export default {
