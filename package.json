@@ -1,6 +1,6 @@
 {
   "name": "kusc_api",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Basic wrapper for KUSC's audio streams",
   "main": "index.js",
   "scripts": {
