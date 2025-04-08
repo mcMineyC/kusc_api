@@ -4,40 +4,6 @@ import blessed from "blessed";
 import fs from "fs";
 var streamInfoUrl =
   "https://playerservices.streamtheworld.com/api/livestream?station=<callsign>&transports=http%2Chls&version=1.10";
-// const streams = [
-//   {
-//     name: "KUSC",
-//     id: "KUSC",
-//   },
-//   {
-//     name: "Classical California Ultimate Playlist",
-//     id: "CC1_S01",
-//   },
-//   {
-//     name: "A Classical California Christmas",
-//     id: "CC2_S01",
-//   },
-//   {
-//     name: "Classical California Movie Music Playlist",
-//     id: "CC3_S01",
-//   },
-//   {
-//     name: "Great Escape",
-//     id: "CC4_S01",
-//   },
-//   {
-//     name: "Classical Americano",
-//     id: "CC5_S01",
-//   },
-//   {
-//     name: "Arcade",
-//     id: "CC8_S01",
-//   },
-//   {
-//     name: "Glissando",
-//     id: "CC9_S01",
-//   },
-// ];
 const streamsQuery = JSON.parse(fs.readFileSync("streamsQuery.json", "utf-8"));
 async function getStreams() {
   try {
