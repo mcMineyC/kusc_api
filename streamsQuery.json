@@ -1,0 +1,12 @@
+{
+  "operationName": "StreamsList",
+  "variables": {
+    "isKusc": true,
+    "isKdfc": false,
+    "isCC": false,
+    "where": {
+      "KUSC": true
+    }
+  },
+  "query": "fragment StreamConfigFragment on StreamConfig { name donationUrl streamOrder seo { title description keywords image { url __typename } __typename } sponsorCollection(limit: 100) { items { sys { id __typename } title url name logo { url title __typename } __typename } __typename } __typename } query StreamsList($where: StreamFilter!, $isKusc: Boolean!, $isKdfc: Boolean!, $isCC: Boolean!) { streamCollection(limit: 20, where: $where) { items { sys { id __typename } name description playerName onAir streamTrackingId thumbnail { url description __typename } kuscConfig @include(if: $isKusc) { ...StreamConfigFragment __typename } kdfcConfig @include(if: $isKdfc) { ...StreamConfigFragment __typename } ccConfig @include(if: $isCC) { ...StreamConfigFragment __typename } __typename } __typename } }"
+}
