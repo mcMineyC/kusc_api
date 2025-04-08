@@ -5,6 +5,7 @@ import fs from "fs";
 var streamInfoUrl =
   "https://playerservices.streamtheworld.com/api/livestream?station=<callsign>&transports=http%2Chls&version=1.10";
 const streamsQuery = JSON.parse(fs.readFileSync("streamsQuery.json", "utf-8"));
+
 async function getStreams() {
   try {
     const response = await axios.post(
@@ -193,7 +194,9 @@ selectStream().then(async (selected) => {
 // ).then(async (value) => {});
 
 export default {
+  getStreams,
   getStreamInfo,
   getCurrentMetadata,
   getStreamUrl,
+  selectStream,
 };

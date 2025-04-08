@@ -1,6 +1,41 @@
-# Kusc Reverse Engineering
-This is a repo for reverse engineering KUSC's audio stream for *educational purposes* :wink:
+# KUSC API
 
-It holds example responses and a program to fetch the audio stream URL for a given call sign/stream.
+A Node.js wrapper for the KUSC radio streaming API.
 
-WIP: check DOCS.md for more info on what happens behind the scenes.
+## Installation
+
+```bash
+npm install kusc-api
+```
+
+## Usage
+
+```javascript
+import { getStreamUrl, getCurrentMetadata, selectStream } from 'kusc-api';
+
+// Get stream URL
+const url = await getStreamUrl('KUSC', 'AAC96');
+
+// Get current track metadata
+const metadata = await getCurrentMetadata('KUSC');
+
+// Interactive stream selection
+const stream = await selectStream();
+```
+
+## API Reference
+
+### getStreams()
+Gets a list of available streams
+
+### getStreamInfo(streamId)
+Gets information about the given stream id
+
+### getStreamUrl(streamId, preferredStream (optional))
+Gets a suitable audio stream URL for the given id and preferred format
+
+### getCurrentMetadata(streamId, includeImage(optional))
+Gets current track metadata for the given stream id, optionally including image data
+
+### selectStream()
+Shows a nice dialog for selecting a stream using blessed
