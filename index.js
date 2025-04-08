@@ -48,16 +48,27 @@ async function getStreamInfo(callSign) {
   return data;
 }
 
-async function getStreamUrl(streamId) {
+async function getStreamUrl(streamId, preferredStream = "AAC96") {
   var streamInfo = await getStreamInfo(streamId);
   if (streamInfo.length === 0) {
     throw new Error("No streams found");
   }
-  var preferredStream = "AAC96";
   var stream = {};
-  if (streamInfo.filter((mp) => mp.mount.includes(preferredStream)).length > 0)
-    stream = streamInfo.find((mp) => mp.mount.includes(preferredStream));
+  if (
+    streamInfo.filter((mp) => mp.mount.replace(streamId, "") == preferredStream)
+      .length > 0
+  )
+    stream = streamInfo.find(
+      (mp) => mp.mount.replace(streamId, "") == preferredStream,
+    );
+  // find the preferred stream
+  else {
+    console.warn(
+      `Preferred stream ${preferredStream} not found, using first stream`,
+    );
+    stream = streamInfo[0]; // default to first stream if preferred stream not found
+  }
   return stream.url + "/" + stream.mount + "." + stream.codec;
 }
 
-getStreamUrl("KUSC").then((url) => console.log("Got url:", url));
+getStreamUrl("KUSC", "AC96").then((url) => console.log("Got url:", url));
