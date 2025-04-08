@@ -38,6 +38,8 @@ async function getStreamInfo(callSign) {
         ":" +
         server.ports.port["#text"],
     }; // store copy of mount mountpoint
+    if (tmp.codec.includes("aac")) tmp.codec = "aac";
+    else if (tmp.codec.includes("mp3")) tmp.codec = "mp3";
     acc[mp.mount] = tmp;
     return acc;
   }, {});
@@ -55,11 +57,7 @@ async function getStreamUrl(streamId) {
   var stream = {};
   if (streamInfo.filter((mp) => mp.mount.includes(preferredStream)).length > 0)
     stream = streamInfo.find((mp) => mp.mount.includes(preferredStream));
-  return stream.url + stream.mount + "/" + stream.codec;
-  // return streamInfo.then((info) => {
-  //   var url = info.streams.stream.find((stream) => stream.id === streamId).url;
-  //   return url;
-  // });
+  return stream.url + "/" + stream.mount + "." + stream.codec;
 }
 
 getStreamUrl("KUSC").then((url) => console.log("Got url:", url));
