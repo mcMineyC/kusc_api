@@ -1,3 +1,13 @@
+# KUSC
 https://25023.live.streamtheworld.com/KUSCAAC96.aac?tdsdk=js-%40td&swm=false&pname=TDSdk&pversion=%40td&banners=none&burst-time=15&sbmid=42a8cb03-2ad3-4821-fd67-0dc0cb21854d
 
 https://schedule.kusc.org/v3/songs/KUSC/now?includeImage=true
+
+# KSGN
+https://ksgn.com/assets/audio/stream/mp3
+https://ksgn.com/assets/audio/stream/aac
+- note: curl user ageent not allowed
+- blank UA works
+- "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81"
+
+https://ksgn.com/api/now-playing/now-playing1.json
