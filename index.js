@@ -47,8 +47,12 @@ async function getStreamInfo(callSign) {
     attributeNamePrefix: "",
   });
   var data = parser.parse(response.data);
-  data = data.live_stream_config.mountpoints.mountpoint;
-  data = data.filter((mp) => mp.status["status-code"] == "200");
+  try{
+    data = data.live_stream_config.mountpoints.mountpoint;
+    data = data.filter((mp) => mp.status["status-code"] == "200");
+  }catch(_){
+    throw("No valid mountpoints for stream "+callSign);
+  }
   data = data.reduce((acc, mp) => {
     var server = mp.servers.server[0];
     // console.log(JSON.stringify(mp, null, 2));
