@@ -181,20 +181,6 @@ async function selectStream() {
   return selection;
 }
 
-// Usage:
-selectStream().then(async (selected) => {
-  if (selected) {
-    selected = selected.value;
-    console.log("Selected stream:", selected.name);
-    // Use the selected.playerName to get the stream URL
-    console.log("Got url:", await getStreamUrl(selected.playerName));
-    console.log(
-      "Got metadata:",
-      (await getCurrentMetadata(selected.playerName)).summary,
-    );
-  }
-});
-
 export default {
   getStreams,
   getStreamInfo,
