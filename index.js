@@ -2,9 +2,16 @@ import axios from "axios";
 import { XMLParser } from "fast-xml-parser";
 import blessed from "blessed";
 import fs from "fs";
+import path from "path";
+
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 var streamInfoUrl =
   "https://playerservices.streamtheworld.com/api/livestream?station=<callsign>&transports=http%2Chls&version=1.10";
-const streamsQuery = JSON.parse(fs.readFileSync("streamsQuery.json", "utf-8"));
+const streamsQuery = JSON.parse(fs.readFileSync(path.join(__dirname, "streamsQuery.json"), "utf-8"));
 
 async function getStreams() {
   try {
