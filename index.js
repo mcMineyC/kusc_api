@@ -2,10 +2,15 @@ import axios from "axios";
 import blessed from "blessed";
 import {XMLParser} from "fast-xml-parser";
 import fs from "fs";
+import path from "path";
+import { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
 
 var streamInfoUrl =
     "https://playerservices.streamtheworld.com/api/livestream?station=<callsign>&transports=http%2Chls&version=1.10";
-const streamsQuery = JSON.parse(fs.readFileSync("streamsQuery.json", "utf-8"));
+const streamsQuery = JSON.parse(fs.readFileSync(path.join(__dirname, "streamsQuery.json"), "utf-8"));
 
 async function getStreams() {
   try {
@@ -176,6 +181,7 @@ async function selectStream() {
 }
 
 // Usage:
+/*
 selectStream().then(async (selected) => {
   if (selected) {
     selected = selected.value;
@@ -187,7 +193,7 @@ selectStream().then(async (selected) => {
         (await getCurrentMetadata(selected.playerName)).summary,
     );
   }
-});
+});*/
 
 export default {
   getStreams,
